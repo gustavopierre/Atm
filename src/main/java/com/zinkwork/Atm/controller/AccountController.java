@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zinkwork.Atm.model.Account;
-import com.zinkwork.Atm.service.AtmService;
+import com.zinkwork.Atm.service.AccountService;
 
 @RestController
 @RequestMapping(value = "/atm")
-public class AtmController {
+public class AccountController {
 	
 	@Autowired
-	private AtmService service;
+	private AccountService service;
 	
     @GetMapping(path = "/accounts")
 	public ResponseEntity<List<Account>> findAll(){

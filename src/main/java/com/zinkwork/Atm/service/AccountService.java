@@ -10,7 +10,7 @@ import com.zinkwork.Atm.model.Account;
 import com.zinkwork.Atm.repository.AccountRepository;
 
 @Service
-public class AtmService {
+public class AccountService {
 
 	@Autowired
 	private AccountRepository accountRepository;
