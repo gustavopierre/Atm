@@ -16,7 +16,7 @@ public class AccountTransaction implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private AccountTransactionPK id;
+	private AccountTransactionPK id = new AccountTransactionPK();
 
 	private Instant date;
 	private Double value;
