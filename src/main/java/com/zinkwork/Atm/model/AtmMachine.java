@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name= "tb_atmmachine")
+@Table(name = "tb_atmmachine")
 public class AtmMachine implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
