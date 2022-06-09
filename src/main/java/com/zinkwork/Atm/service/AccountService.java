@@ -13,14 +13,14 @@ import com.zinkwork.Atm.repository.AccountRepository;
 public class AccountService {
 
 	@Autowired
-	private AccountRepository accountRepository;
+	private AccountRepository repository;
 	
 	public List<Account> findAll(){
-		return accountRepository.findAll();
+		return repository.findAll();
 	}
 	
 	public Account findById(Long id){
-		Optional<Account> obj = accountRepository.findById(id);
+		Optional<Account> obj = repository.findById(id);
 		return obj.get();
 	}
 	

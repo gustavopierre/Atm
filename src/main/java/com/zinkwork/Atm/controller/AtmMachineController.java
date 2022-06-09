@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zinkwork.Atm.model.Account;
-import com.zinkwork.Atm.service.AccountService;
+import com.zinkwork.Atm.model.AtmMachine;
+import com.zinkwork.Atm.service.AtmMachineService;
 
 @RestController
 @RequestMapping(value = "/atm")
-public class AccountController {
+public class AtmMachineController {
 	
 	@Autowired
-	private AccountService service;
+	private AtmMachineService service;
 	
-    @GetMapping(path = "/accounts")
-	public ResponseEntity<List<Account>> findAll(){
-		List<Account> list = service.findAll();
+    @GetMapping(path = "/atms")
+	public ResponseEntity<List<AtmMachine>> findAll(){
+		List<AtmMachine> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-    @GetMapping(value = "/accounts/{id}")
-	public ResponseEntity<Account> findById(@PathVariable Long id){
-		Account obj = service.findById(id);
+    @GetMapping(value = "/atms/{id}")
+	public ResponseEntity<AtmMachine> findById(@PathVariable Long id){
+		AtmMachine obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }
