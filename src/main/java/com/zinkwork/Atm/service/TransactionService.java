@@ -24,5 +24,8 @@ public class TransactionService {
 		Optional<Transaction> obj = repository.findById(id);
 		return obj.get();
 	}
-
+	
+	public Transaction insert(Transaction obj) {
+		return repository.save(obj);
+	}
 }

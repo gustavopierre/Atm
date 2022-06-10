@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_atmmachine")
 public class AtmMachine implements Serializable {
@@ -25,6 +27,7 @@ public class AtmMachine implements Serializable {
 	private Integer quantityNote10;
 	private Integer quantityNote5;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "atmMachine")
 	private List<Transaction> transactions = new ArrayList<>();
 
