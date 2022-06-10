@@ -37,7 +37,7 @@ public class AccountController {
 		return ResponseEntity.ok().body(obj);
 	}
     
-    @PostMapping
+    @PostMapping(value = "/accounts")
     public ResponseEntity<Account> insert(@RequestBody Account obj){
     	obj = service.insert(obj);
     	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/accounts/{id}").buildAndExpand(obj.getId()).toUri();

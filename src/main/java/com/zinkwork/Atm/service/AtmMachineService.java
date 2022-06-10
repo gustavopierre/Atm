@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zinkwork.Atm.model.Account;
 import com.zinkwork.Atm.model.AtmMachine;
 import com.zinkwork.Atm.repository.AtmMachineRepository;
 
@@ -24,4 +25,9 @@ public class AtmMachineService {
 		return obj.get();
 	}
 	
+	public AtmMachine insert(AtmMachine obj) {
+		return repository.save(obj);
+	}
+	
+
 }

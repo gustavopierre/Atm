@@ -80,6 +80,22 @@ public class AtmMachine implements Serializable {
 	public List<Transaction> getTransactions() {
 		return transactions;
 	}
+	
+	public void setQuantityNote50(Integer quantityNote50) {
+		this.quantityNote50 = quantityNote50;
+	}
+
+	public void setQuantityNote20(Integer quantityNote20) {
+		this.quantityNote20 = quantityNote20;
+	}
+
+	public void setQuantityNote10(Integer quantityNote10) {
+		this.quantityNote10 = quantityNote10;
+	}
+
+	public void setQuantityNote5(Integer quantityNote5) {
+		this.quantityNote5 = quantityNote5;
+	}
 
 	@Override
 	public int hashCode() {
