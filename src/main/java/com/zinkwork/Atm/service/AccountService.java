@@ -32,4 +32,16 @@ public class AccountService {
 		repository.deleteById(id);
 	}
 	
+	public Account update(Long id, Account obj) {
+		Account entity = repository.getOne(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+
+	private void updateData(Account entity, Account obj) {
+		entity.setPin(obj.getPin());
+		entity.setOverdraft((obj.getOverdraft()));
+		entity.updateBalance(0.00);		
+	}
+	
 }
