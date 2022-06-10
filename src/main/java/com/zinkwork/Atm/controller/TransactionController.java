@@ -24,7 +24,7 @@ public class TransactionController {
 		List<Transaction> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-    @GetMapping(value = "/transactions/{id}")
+    @GetMapping(value = "/balance/{id}")
 	public ResponseEntity<Transaction> findById(@PathVariable Long id){
 		Transaction obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);

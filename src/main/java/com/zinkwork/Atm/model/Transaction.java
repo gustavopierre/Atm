@@ -33,7 +33,6 @@ public class Transaction implements Serializable {
 	@JoinColumn(name = "atmmachine_id")
 	private AtmMachine atmMachine;
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private Account account;

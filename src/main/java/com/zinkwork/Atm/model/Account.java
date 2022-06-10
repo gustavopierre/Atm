@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_account")
 public class Account implements Serializable {
@@ -25,18 +27,19 @@ public class Account implements Serializable {
 	private Double balance;
 	private Double overdraft;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "account")
 	private List<Transaction> transactions = new ArrayList<>();
 
 	public Account() {
 	}
 
-	public Account(Long id, Long number, Long pin, Double balance, Double overdraft) {
+	public Account(Long id, Long number, Long pin, Double openingBalance, Double overdraft) {
 		super();
 		this.id = id;
 		this.number = number;
 		this.pin = pin;
-		this.balance = balance;
+		this.balance = openingBalance;
 		this.overdraft = overdraft;
 	}
 
@@ -74,6 +77,17 @@ public class Account implements Serializable {
 
 	public List<Transaction> getTransactions() {
 		return transactions;
+	}
+
+	public boolean checkPin(Long pin) {
+		if (pin == this.pin) {
+			return true;
+		}
+		return false;
+	}
+
+	public Double getWithdrawAvailable() {
+		return getBalance() + getOverdraft();
 	}
 
 	@Override

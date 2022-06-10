@@ -24,4 +24,8 @@ public class AccountService {
 		return obj.get();
 	}
 	
+	public Account insert(Account obj) {
+		return repository.save(obj);
+	}
+	
 }

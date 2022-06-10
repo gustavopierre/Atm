@@ -98,7 +98,7 @@ public class AtmMachine implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
-	public Double total() {
+	public Double getTotal() {
 		return quantityNote5 * 5.0 + quantityNote10 * 10.0 + quantityNote20 * 20.0 + quantityNote50 * 50.0;
 	}
 
