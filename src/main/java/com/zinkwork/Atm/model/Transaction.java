@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_transaction")
 public class Transaction implements Serializable {
@@ -20,24 +23,28 @@ public class Transaction implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant momment;
 	private Double value;
-	
+
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "atmmachine_id")
 	private AtmMachine atmMachine;
-	
+
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "account_id")
 	private Account account;
-	
-	public Transaction(){
+
+	public Transaction() {
 	}
-	
-	public Transaction(Long id, Instant momment, Double value, AtmMachine atmMachine, Account account) {
+
+	public Transaction(Long id, Double value, AtmMachine atmMachine, Account account) {
 		super();
 		this.id = id;
-		this.momment = momment;
+		this.momment = Instant.now();
 		this.value = value;
 		this.atmMachine = atmMachine;
 		this.account = account;
@@ -99,7 +106,5 @@ public class Transaction implements Serializable {
 		Transaction other = (Transaction) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
+
 }

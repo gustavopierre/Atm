@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Profile;
 
 import com.zinkwork.Atm.model.Account;
 import com.zinkwork.Atm.model.AtmMachine;
+import com.zinkwork.Atm.model.Transaction;
 import com.zinkwork.Atm.repository.AccountRepository;
 import com.zinkwork.Atm.repository.AtmMachineRepository;
+import com.zinkwork.Atm.repository.TransactionRepository;
 
 @Configuration
 @Profile("test")
@@ -21,6 +23,9 @@ public class TestConfig implements CommandLineRunner {
 
 	@Autowired
 	private AtmMachineRepository atmMachineRepository;
+	
+	@Autowired
+	private TransactionRepository transactionRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -34,6 +39,13 @@ public class TestConfig implements CommandLineRunner {
 
 		accountRepository.saveAll(Arrays.asList(acc1, acc2));
 
+		Transaction t1 = new Transaction(null, 100.00, atm1, acc1);
+		Transaction t2 = new Transaction(null, 50.00, atm1, acc1);
+		Transaction t3 = new Transaction(null, 200.00, atm1, acc2);
+		
+		transactionRepository.saveAll(Arrays.asList(t1, t2, t3));
+		
+		
 	}
 
 }

@@ -1,9 +1,9 @@
 package com.zinkwork.Atm.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +26,7 @@ public class Account implements Serializable {
 	private Double overdraft;
 
 	@OneToMany(mappedBy = "account")
-	private Set<Transaction> transactions = new HashSet<>();
+	private List<Transaction> transactions = new ArrayList<>();
 
 	public Account() {
 	}
@@ -72,7 +72,7 @@ public class Account implements Serializable {
 		balance += value;
 	}
 
-	public Set<Transaction> getTransactions() {
+	public List<Transaction> getTransactions() {
 		return transactions;
 	}
 
