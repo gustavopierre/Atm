@@ -120,5 +120,11 @@ public class AtmMachine implements Serializable {
 	public Double getTotal() {
 		return quantityNote5 * 5.0 + quantityNote10 * 10.0 + quantityNote20 * 20.0 + quantityNote50 * 50.0;
 	}
+	
+	public void execWithdraw(Long id, Double value) {
+		if (value < getTotal()) {
+			
+		}
+	}
 
 }
