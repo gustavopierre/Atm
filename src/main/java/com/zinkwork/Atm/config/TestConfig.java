@@ -25,10 +25,10 @@ public class TestConfig implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		AtmMachine atm1 = new AtmMachine(null, 10, 30, 30, 20);
+
 		Account acc1 = new Account(null, 123456789L, 1234L, 800.00, 200.00);
 		Account acc2 = new Account(null, 987654321L, 4321L, 1230.00, 150.00);
-
-		AtmMachine atm1 = new AtmMachine(null, 10, 30, 30, 20);
 
 		atmMachineRepository.saveAll(Arrays.asList(atm1));
 

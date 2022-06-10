@@ -1,19 +1,22 @@
 package com.zinkwork.Atm.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_atmmachine")
-public class AtmMachine implements Serializable{
+public class AtmMachine implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -21,6 +24,9 @@ public class AtmMachine implements Serializable{
 	private Integer quantityNote20;
 	private Integer quantityNote10;
 	private Integer quantityNote5;
+
+	@OneToMany(mappedBy = "atmMachine")
+	private Set<Transaction> transactions = new HashSet<>();
 
 	public AtmMachine() {
 	}
@@ -69,6 +75,10 @@ public class AtmMachine implements Serializable{
 
 	public void updateQuantityNote5(Integer quantityNote5) {
 		this.quantityNote5 += quantityNote5;
+	}
+
+	public Set<Transaction> getTransactions() {
+		return transactions;
 	}
 
 	@Override
