@@ -1,5 +1,6 @@
 package com.zinkwork.Atm.service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ public class AtmService {
 		return accountRepository.save(entity);
 	}
 
-	private void updateDataAccount(Account entity, Account obj) {
+	public void updateDataAccount(Account entity, Account obj) {
 		entity.setPin(obj.getPin());
 		entity.setOverdraft((obj.getOverdraft()));
 		entity.updateBalance(0.00);		
@@ -60,18 +61,12 @@ public class AtmService {
 		return obj.get();
 	}
 	
-	public Transaction insertTransaction(Transaction obj) {
-		/*
-		AccountService accountService;
-		Optional<Account> account;
-    	account = accountService.getRepository().findById(account_id);
-    	
-    	Optional<AtmMachine> atmMachine;
-    	AtmMachineService atmMachineService = new AtmMachineService();
-    	atmMachine = atmMachineService.getRepository().findById(atm_id);
-    	
-    	obj.setAccount(account.get());
-    	obj.setAtmMachine(atmMachine.get());*/
+	public Transaction insertTransaction(Long atm_id, Long account_id, Double value) {
+		
+		Account account = findByIdAccount(account_id);
+		AtmMachine atmMachine = findByIdAtmMachine(atm_id);
+		Transaction obj = new Transaction(null, value, atmMachine,  account);
+
 		return transactionRepository.save(obj);
 	}
 	
