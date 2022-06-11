@@ -83,7 +83,7 @@ public class AtmMachine implements Serializable {
 	public List<Transaction> getTransactions() {
 		return transactions;
 	}
-	
+
 	public void setQuantityNote50(Integer quantityNote50) {
 		this.quantityNote50 = quantityNote50;
 	}
@@ -120,11 +120,42 @@ public class AtmMachine implements Serializable {
 	public Double getTotal() {
 		return quantityNote5 * 5.0 + quantityNote10 * 10.0 + quantityNote20 * 20.0 + quantityNote50 * 50.0;
 	}
-	
-	public void execWithdraw(Long id, Double value) {
-		if (value < getTotal()) {
-			
-		}
-	}
 
+	public boolean checkValueATM(Double value) {
+		Double remaining = value;
+		int quantity;
+		int notes[][] = {{50, quantityNote50}, {20, quantityNote20}, {10, quantityNote10}, {5, quantityNote5}};
+		
+		if (remaining <= getTotal()){
+			for(int i = 0; i < 4; i++) {
+				quantity = (int)(remaining/notes[i][0]);
+				if (quantity > notes[i][1]) {
+					quantity = notes[i][1];
+				}
+				remaining -= quantity * notes[i][0];
+			}
+			
+			if (remaining == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int[][] quantityNotes(double value){
+		int quantity[][] = {{50, 0}, {20, 0}, {10, 0}, {5, 0}};
+		int notes[][] = {{50, quantityNote50}, {20, quantityNote20}, {10, quantityNote10}, {5, quantityNote5}};
+		double remaining = value;
+		
+		for(int i = 0; i < 4; i++) {
+			quantity[i][1] = (int)(remaining/quantity[i][0]);
+			if (quantity[i][1] > notes[i][1]) {
+				quantity[i][1] = notes[i][1];
+			}
+			remaining -= quantity[i][1] * quantity[i][0];
+		}
+			
+		return quantity;
+	}
+	
 }

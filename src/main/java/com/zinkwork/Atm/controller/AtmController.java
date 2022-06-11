@@ -1,7 +1,6 @@
 package com.zinkwork.Atm.controller;
 
 import java.net.URI;
-import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -80,8 +80,9 @@ public class AtmController {
     }
     */
     @PostMapping(value = "/transactions")
-    public ResponseEntity<Transaction> insertTransaction(@RequestParam Long atm_id, @RequestParam Long account_id, @RequestParam Double value){
-    	Transaction obj = service.insertTransaction(atm_id, account_id, value);
+    @ResponseBody
+    public ResponseEntity<Transaction> insertTransaction(@RequestParam Long atm_id, @RequestParam Long account_id, @RequestParam Double value, @RequestParam Long pin){
+    	Transaction obj = service.insertTransaction(atm_id, account_id, value, pin);
     	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/transaction/{id}").buildAndExpand(obj.getId()).toUri();
     	return ResponseEntity.created(uri).body(obj);
     }

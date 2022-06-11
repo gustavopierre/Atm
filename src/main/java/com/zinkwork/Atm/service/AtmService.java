@@ -61,13 +61,18 @@ public class AtmService {
 		return obj.get();
 	}
 	
-	public Transaction insertTransaction(Long atm_id, Long account_id, Double value) {
-		
+	public Transaction insertTransaction(Long atm_id, Long account_id, Double value, Long pin) {
 		Account account = findByIdAccount(account_id);
 		AtmMachine atmMachine = findByIdAtmMachine(atm_id);
-		Transaction obj = new Transaction(null, value, atmMachine,  account);
+		Transaction obj = null;
+		
+		if (atmMachine.checkValueATM(value)) {
+			obj = new Transaction(null, value, atmMachine,  account);
+	
+			return transactionRepository.save(obj);
+		}
+		return obj;
 
-		return transactionRepository.save(obj);
 	}
 	
 	public List<AtmMachine> findAllAtmMachine() {
@@ -99,4 +104,12 @@ public class AtmService {
 		entity.setQuantityNote10(obj.getQuantityNote10());
 		entity.setQuantityNote5(obj.getQuantityNote5());
 	}
+	
+	public boolean checkPin(Account account, Long pin) {
+		if (pin == account.getPin()) {
+			return true;
+		}
+		return false;
+	}
+	
 }

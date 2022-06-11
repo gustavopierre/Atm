@@ -75,15 +75,12 @@ public class Account implements Serializable {
 		balance += value;
 	}
 
-	public List<Transaction> getTransactions() {
-		return transactions;
+	public void updateOverdraft(Double value) {
+		balance += value;
 	}
 
-	public boolean checkPin(Long pin) {
-		if (pin == this.pin) {
-			return true;
-		}
-		return false;
+	public List<Transaction> getTransactions() {
+		return transactions;
 	}
 
 	public Double getWithdrawAvailable() {
