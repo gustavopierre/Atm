@@ -39,12 +39,17 @@ public class AtmMachineService {
 		return repository.save(entity);
 	}
 
-	private void updateData(AtmMachine entity, AtmMachine obj) {
+	public void updateData(AtmMachine entity, AtmMachine obj) {
 		entity.setQuantityNote50(obj.getQuantityNote50());
 		entity.setQuantityNote20(obj.getQuantityNote20());
 		entity.setQuantityNote10(obj.getQuantityNote10());
 		entity.setQuantityNote5(obj.getQuantityNote5());
 	}
+	
+	public AtmMachineRepository getRepository() {
+		return repository;
+	}
+	
 
 	
 }

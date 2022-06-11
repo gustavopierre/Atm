@@ -87,7 +87,7 @@ public class Transaction implements Serializable {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

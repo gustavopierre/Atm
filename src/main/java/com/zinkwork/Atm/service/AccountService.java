@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.zinkwork.Atm.model.Account;
 import com.zinkwork.Atm.repository.AccountRepository;
+import com.zinkwork.Atm.repository.AtmMachineRepository;
 
 @Service
 public class AccountService {
@@ -44,4 +45,7 @@ public class AccountService {
 		entity.updateBalance(0.00);		
 	}
 	
+	public AccountRepository getRepository() {
+		return repository;
+	}
 }
