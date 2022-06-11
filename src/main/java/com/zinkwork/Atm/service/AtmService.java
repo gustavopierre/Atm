@@ -1,12 +1,12 @@
 package com.zinkwork.Atm.service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zinkwork.Atm.exception.ResourceNotFoundException;
 import com.zinkwork.Atm.model.Account;
 import com.zinkwork.Atm.model.AtmMachine;
 import com.zinkwork.Atm.model.Transaction;
@@ -29,7 +29,7 @@ public class AtmService {
 	
 	public Account findByIdAccount(Long id){
 		Optional<Account> obj = accountRepository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public Account insertAccount(Account obj) {
