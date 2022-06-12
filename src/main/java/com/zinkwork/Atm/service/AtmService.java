@@ -73,17 +73,54 @@ public class AtmService {
 		return obj.get();
 	}
 	
-	public Transaction insertTransaction(Long atm_id, Long account_id, Double value, Long pin) {
+	public String insertTransaction(Long atm_id, Long account_id, Double value, Long pin) {
 		Account account = findByIdAccount(account_id);
 		AtmMachine atmMachine = findByIdAtmMachine(atm_id);
 		Transaction obj = null;
+		String message;
+		StringBuilder sb = new StringBuilder();
 		
-		if (atmMachine.checkValueATM(value)) {
-			obj = new Transaction(null, value, atmMachine,  account);
-	
-			return transactionRepository.save(obj);
+		if(checkPin(account, pin)) {
+			if (atmMachine.checkValueATM(value)) {
+				if (Withdraw.checkWithdraw(account, value)) {
+					Withdraw.updateValue(account, value);
+					int notes[][] = atmMachine.quantityNotes(value);
+					atmMachine.updateQuantityNote50((-1)*notes[0][1]);
+					atmMachine.updateQuantityNote20((-1)*notes[1][1]);
+					atmMachine.updateQuantityNote10((-1)*notes[2][1]);
+					atmMachine.updateQuantityNote5((-1)*notes[3][1]);
+					obj = new Transaction(null, value, atmMachine,  account);
+					
+					transactionRepository.save(obj);
+					
+					sb.append("Balance:\n");
+					sb.append("--------------------------" + "\n");
+					sb.append("Account number: " + account.getNumber() + "\n");
+					sb.append("--------------------------" + "\n");
+					sb.append("Withdraw: €" + String.format("%.2f", value) + "\n");
+					sb.append("Notes of €50: " + notes[0][1] + "\n");
+					sb.append("Notes of €20: " + notes[1][1] + "\n");
+					sb.append("Notes of €10: " + notes[2][1] + "\n");
+					sb.append("Notes of €5: " + notes[3][1] + "\n");
+					sb.append("--------------------------" + "\n");
+					sb.append("Balance: " + String.format("%.2f", account.getBalance()) + "\n");
+					sb.append("Overdraft: " + String.format("%.2f", account.getOverdraft()) + "\n");
+					sb.append("Withdrw availabe: " + String.format("%.2f", account.getWithdrawAvailable()) + "\n");
+					sb.append("--------------------------" + "\n");
+					message = sb.toString();
+				}
+				else {
+					message = "Sorry. Your account balance is not enough.";
+				}
+			}
+			else {
+				message = "Sorry. The money in this ATM is not enough.";
+			}
 		}
-		return obj;
+		else {
+			message = "Sorry. Wrong PIN.";
+		}
+		return message;
 
 	}
 	
@@ -117,8 +154,8 @@ public class AtmService {
 		entity.setQuantityNote5(obj.getQuantityNote5());
 	}
 	
-	public boolean checkPin(Account account, Long pin) {
-		if (pin == account.getPin()) {
+	public boolean checkPin(Account account, long pin) {
+		if (pin == account.getPin().longValue()) {
 			return true;
 		}
 		return false;

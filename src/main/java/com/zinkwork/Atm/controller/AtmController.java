@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,16 @@ public class AtmController {
 		Account obj = service.findByIdAccount(id);
 		return ResponseEntity.ok().body(obj);
 	}
-    
+	
+    @GetMapping(value = "/balance")
+	public ResponseEntity<Account> balanceAccount(@RequestParam Long account_id, @RequestParam long pin){
+		Account obj = service.findByIdAccount(account_id);
+		if (service.checkPin(obj, pin)) {
+			return ResponseEntity.ok().body(obj); 
+		}
+		return ResponseEntity.badRequest().body(null);
+	}
+        
     @PostMapping(value = "/accounts")
     public ResponseEntity<Account> insertAccount(@RequestBody Account obj){
     	obj = service.insertAccount(obj);
@@ -70,21 +80,13 @@ public class AtmController {
 		Transaction obj = service.findByIdTransaction(id);
 		return ResponseEntity.ok().body(obj);
 	}
-    /*
-    @PostMapping(value = "/transactions")
-    public ResponseEntity<Transaction> insertTransaction(@RequestBody Transaction obj){
-    	obj.setMomment(Instant.now());
-    	obj = service.insertTransaction(obj);
-    	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/transaction/{id}").buildAndExpand(obj.getId()).toUri();
-    	return ResponseEntity.created(uri).body(obj);
-    }
-    */
-    @PostMapping(value = "/transactions")
+    
+    @PostMapping(value = "/withdraw")
     @ResponseBody
-    public ResponseEntity<Transaction> insertTransaction(@RequestParam Long atm_id, @RequestParam Long account_id, @RequestParam Double value, @RequestParam Long pin){
-    	Transaction obj = service.insertTransaction(atm_id, account_id, value, pin);
-    	URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/transaction/{id}").buildAndExpand(obj.getId()).toUri();
-    	return ResponseEntity.created(uri).body(obj);
+    public ResponseEntity<String> insertTransaction(@RequestParam Long atm_id, @RequestParam Long account_id, @RequestParam Double value, @RequestParam Long pin){
+    	String message = service.insertTransaction(atm_id, account_id, value, pin);
+    	//URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/transaction/{id}").buildAndExpand(obj.getId()).toUri();
+    	return new ResponseEntity<>(message, HttpStatus.OK);
     }
     
     @GetMapping(path = "/atms")

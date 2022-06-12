@@ -71,12 +71,12 @@ public class Account implements Serializable {
 		return balance;
 	}
 
-	public void updateBalance(Double value) {
+	public void updateBalance(double value) {
 		balance += value;
 	}
 
-	public void updateOverdraft(Double value) {
-		balance += value;
+	public void updateOverdraft(double value) {
+		overdraft += value;
 	}
 
 	public List<Transaction> getTransactions() {

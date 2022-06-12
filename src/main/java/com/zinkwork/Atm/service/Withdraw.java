@@ -10,7 +10,12 @@ public class Withdraw {
 			}
 			else {
 				account.updateOverdraft((-1)*(value - account.getBalance()));
+				account.updateBalance((-1)*account.getBalance());
 			}
 		}
+	}
+	
+	public static boolean checkWithdraw(Account account, double value) {
+		return Saving.checkSaving(account, value);
 	}
 }
